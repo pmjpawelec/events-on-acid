@@ -1,0 +1,188 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/black.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <h1>Events on Acid</h1>
+            <h3>Data consistency in the world of microservices</h3>
+            <p>Przemysław Pawelec</p>
+            <p>Scalar</p>
+        </section>
+
+        <section>
+            <h2>Disclaimer 1</h2>
+            <p>We are not going to get full ACID</p>
+        </section>
+
+        <section>
+            <h2>Disclaimer 2</h2>
+            <p>One might not need this machinery</p>
+        </section>
+
+        <section>
+            <h2>Examples</h2>
+            <p>Statistics gathering</p>
+            <p>Servicing users</p>
+        </section>
+
+        <section>
+            <section>
+                <h1>Problem</h1>
+            </section>
+
+            <section>
+                <h2>Data inconsistency</h2>
+                <p>todo: diagram with inconsistency</p>
+            </section>
+
+            <section>
+                <h2>Extendable Synchronous API</h2>
+            </section>
+
+            <section>
+                <p>todo: graph of a process</p>
+            </section>
+
+            <section>
+                <p>todo: graph of an extended process</p>
+            </section>
+        </section>
+
+        <section>
+            <section>
+                <h1>Solution</h1>
+                <h3>Transaction over transactions</h3>
+            </section>
+
+            <section>
+                <h2>Requirements</h2>
+                <p class="fragment">Rollbacks</p>
+                <p class="fragment">Easy commits</p>
+            </section>
+
+            <section>
+                <h2>Protocol</h2>
+            </section>
+
+            <section>
+                <h2>Transaction Manager</h2>
+                <p>todo: drawing with event store, 2 services and TM</p>
+            </section>
+
+            <section>
+                <h2>Configuration</h2>
+                <p>Transaction manager needs a list of events in a process</p>
+                <p>Each service has its own documentation of events - e.g roots, responses</p>
+                <p>One can put them together to obtain the graphs of the processes</p>
+            </section>
+
+            <section>
+                <h2>Happy path</h2>
+                <p class="fragment">Services work as usual</p>
+                <p class="fragment">Transaction Manager waits for all events from a process to appear</p>
+                <p class="fragment">Sends meta event: Commit</p>
+                <p class="fragment">The process is finished</p>
+            </section>
+
+            <section>
+                <h2>Unfortunate accident</h2>
+                <p class="fragment">A service encounters an error</p>
+                <p class="fragment">It broadcasts a meta event: Rollback</p>
+                <p class="fragment">Other participants scrap their work</p>
+                <p class="fragment">The process never existed</p>
+            </section>
+
+            <section>
+                <h2>Timeouts</h2>
+                <p>No sign of life cause Transaction Manager to send Rollback</p>
+            </section>
+        </section>
+
+        <section>
+            <section>
+                <h1>Benefits</h1>
+            </section>
+            <section>
+                <h2>Common with Sagas</h2>
+                <p>Consistency</p>
+                <p>Synchronous API</p>
+                <p>Distributed validation</p>
+            </section>
+
+            <section>
+                <h2>Over Sagas</h2>
+                <p>Extendable - we can add to a process without writing a code in Transaction Manager</p>
+                <p>Modular - we can choose a subset of our services without writing any code</p>
+                <p>Dynamic - we can do the above without recompiling anything</p>
+            </section>
+        </section>
+
+        <section>
+            <section>
+                <h1>Philosophy</h1>
+            </section>
+            <section>
+                <h2>Saga</h2>
+                <p>todo: image of one square pointing to two squares below</p>
+            </section>
+            <section>
+                <h2>Delegation</h2>
+                <p>todo: image of a square being pointed by two squares below</p>
+            </section>
+            <section>
+                <p>Saga pattern is a micromonolith</p>
+            </section>
+            <section>
+                <h2>Expressive power</h2>
+            </section>
+        </section>
+
+        <section>
+            <h1>Fin</h1>
+        </section>
+
+    </div>
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+</script>
+</body>
+</html>
+
+
