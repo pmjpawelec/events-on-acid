@@ -7,7 +7,7 @@
     <title>reveal.js</title>
 
     <link rel="stylesheet" href="css/reveal.css">
-    <link rel="stylesheet" href="css/theme/black.css">
+    <link rel="stylesheet" href="css/theme/white.css">
 
     <!-- Theme used for syntax highlighting of code -->
     <link rel="stylesheet" href="lib/css/zenburn.css">
@@ -25,26 +25,25 @@
 <div class="reveal">
     <div class="slides">
         <section>
-            <h1>Events on Acid</h1>
-            <h3>Data consistency in the world of microservices</h3>
-            <p>Przemysław Pawelec</p>
-            <p>Scalar</p>
-        </section>
-
-        <section>
-            <h2>Disclaimer 1</h2>
-            <p>We are not going to get full ACID</p>
-        </section>
-
-        <section>
-            <h2>Disclaimer 2</h2>
-            <p>One might not need this machinery</p>
-        </section>
-
-        <section>
-            <h2>Examples</h2>
-            <p>Statistics gathering</p>
-            <p>Servicing users</p>
+            <section>
+                <h1>Events on Acid</h1>
+                <h3>Data consistency in the world of microservices</h3>
+                <p>Przemysław Pawelec</p>
+                <p>Scalar</p>
+            </section>
+            <section>
+                <h2>Disclaimer 1</h2>
+                <p>We are not going to get full ACID</p>
+            </section>
+            <section>
+                <h2>Disclaimer 2</h2>
+                <p>One might not need this machinery</p>
+            </section>
+            <section>
+                <p>Statistics gathering</p>
+                <p>vs</p>
+                <p>Servicing users</p>
+            </section>
         </section>
 
         <section>
@@ -54,7 +53,7 @@
 
             <section>
                 <h2>Data inconsistency</h2>
-                <p>todo: diagram with inconsistency</p>
+                <img src="img/inconsistency.svg"/>
             </section>
 
             <section>
@@ -62,11 +61,11 @@
             </section>
 
             <section>
-                <p>todo: graph of a process</p>
+                <img src="img/simple_process.svg"/>
             </section>
 
             <section>
-                <p>todo: graph of an extended process</p>
+                <img src="img/extended_process.svg"/>
             </section>
         </section>
 
@@ -83,12 +82,8 @@
             </section>
 
             <section>
-                <h2>Protocol</h2>
-            </section>
-
-            <section>
                 <h2>Transaction Manager</h2>
-                <p>todo: drawing with event store, 2 services and TM</p>
+                <img width="50%" height="50%" src="img/transaction_manager_introduces.svg"/>
             </section>
 
             <section>
@@ -100,18 +95,22 @@
 
             <section>
                 <h2>Happy path</h2>
-                <p class="fragment">Services work as usual</p>
-                <p class="fragment">Transaction Manager waits for all events from a process to appear</p>
-                <p class="fragment">Sends meta event: Commit</p>
-                <p class="fragment">The process is finished</p>
+                <ul>
+                    <li class="fragment">Services work as usual</li>
+                    <li class="fragment">Transaction Manager waits for all events from a process to appear</li>
+                    <li class="fragment">Sends meta event: Commit</li>
+                    <li class="fragment">The process is finished</li>
+                </ul>
             </section>
 
             <section>
                 <h2>Unfortunate accident</h2>
-                <p class="fragment">A service encounters an error</p>
-                <p class="fragment">It broadcasts a meta event: Rollback</p>
-                <p class="fragment">Other participants scrap their work</p>
-                <p class="fragment">The process never existed</p>
+                <ul>
+                    <li class="fragment">A service encounters an error</li>
+                    <li class="fragment">It broadcasts a meta event: Rollback</li>
+                    <li class="fragment">Other participants scrap their work</li>
+                    <li class="fragment">The process never existed</li>
+                </ul>
             </section>
 
             <section>
@@ -126,16 +125,20 @@
             </section>
             <section>
                 <h2>Common with Sagas</h2>
-                <p>Consistency</p>
-                <p>Synchronous API</p>
-                <p>Distributed validation</p>
+                <ul>
+                    <li>Consistency</li>
+                    <li>Synchronous API</li>
+                    <li>Distributed validation</li>
+                </ul>
             </section>
 
             <section>
                 <h2>Over Sagas</h2>
-                <p>Extendable - we can add to a process without writing a code in Transaction Manager</p>
-                <p>Modular - we can choose a subset of our services without writing any code</p>
-                <p>Dynamic - we can do the above without recompiling anything</p>
+                <ul>
+                    <li>Extendable - we can add to a process without writing a code in Transaction Manager</li>
+                    <li>Modular - we can choose a subset of our services without writing any code</li>
+                    <li>Dynamic - we can do the above without recompiling anything</li>
+                </ul>
             </section>
         </section>
 
@@ -144,12 +147,12 @@
                 <h1>Philosophy</h1>
             </section>
             <section>
-                <h2>Saga</h2>
-                <p>todo: image of one square pointing to two squares below</p>
+                <h2>Centralization</h2>
+                <img src="img/central_saga.svg"/>
             </section>
             <section>
                 <h2>Delegation</h2>
-                <p>todo: image of a square being pointed by two squares below</p>
+                <img src="img/delegated_tm.svg"/>
             </section>
             <section>
                 <p>Saga pattern is a micromonolith</p>
